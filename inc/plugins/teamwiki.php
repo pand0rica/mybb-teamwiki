@@ -13,7 +13,7 @@ function teamwiki_info()
     return [
         "name" => "TeamWiki",
         "description" => "Ein einfaches Team-Wiki mit Kategorien, Einträgen und gruppenbasierter Sichtbarkeit.",
-        "website" => "https://github.com/pand0rica/teamwiki",
+        "website" => "https://github.com/pand0rica/mybb-teamwiki",
         "author" => "pand0rica",
         "authorsite" => "https://github.com/pand0rica",
         "version" => "1.0.0",
@@ -84,35 +84,37 @@ function teamwiki_activate()
     $loader = new TeamwikiTemplateLoader();
     $loader->autoLoad($db);
 
-    // Load CSS file and register it as a global stylesheet
+    // Stylesheet in alle Themes (boilerplate.md §6, debugging.md #10)
     $css_file = MYBB_ROOT . "inc/plugins/teamwiki/teamwiki.css";
     if (file_exists($css_file)) {
         require_once MYBB_ADMIN_DIR . "inc/functions_themes.php";
 
-        $css_content = file_get_contents($css_file);
-        $css_data = array(
-            "name" => "teamwiki.css",
-            "tid" => 1,
-            "attachedto" => "",
-            "stylesheet" => $db->escape_string($css_content),
-            "cachefile" => "teamwiki.css",
-            "lastmodified" => time()
-        );
-
-        // Idempotent: update an existing stylesheet row instead of inserting a duplicate
-        $existing = $db->fetch_field(
-            $db->simple_select("themestylesheets", "sid", "name='teamwiki.css' AND tid=1"),
-            "sid"
-        );
-        if ($existing) {
-            $db->update_query("themestylesheets", $css_data, "sid=" . (int)$existing);
-        } else {
-            $db->insert_query("themestylesheets", $css_data);
-        }
-
-        $tids = $db->simple_select("themes", "tid");
-        while ($theme = $db->fetch_array($tids)) {
-            update_theme_stylesheet_list((int)$theme['tid']);
+        $css = $db->escape_string((string)file_get_contents($css_file));
+        $themes = $db->simple_select("themes", "tid");
+        while ($theme = $db->fetch_array($themes)) {
+            $tid = (int)$theme['tid'];
+            $existing = $db->fetch_array($db->simple_select(
+                "themestylesheets", "sid",
+                "name = 'teamwiki.css' AND tid = " . $tid
+            ));
+            if ($existing) {
+                $db->update_query("themestylesheets", [
+                    "stylesheet"   => $css,
+                    "lastmodified" => TIME_NOW,
+                ], "sid = " . (int)$existing['sid'], 1);
+            } else {
+                $sid = (int)$db->insert_query("themestylesheets", [
+                    "name"         => "teamwiki.css",
+                    "tid"          => $tid,
+                    "attachedto"   => "",
+                    "stylesheet"   => $css,
+                    "cachefile"    => "teamwiki.css",
+                    "lastmodified" => TIME_NOW,
+                ]);
+                $db->update_query("themestylesheets",
+                    ["cachefile" => "css.php?stylesheet={$sid}"], "sid = {$sid}", 1);
+            }
+            update_theme_stylesheet_list($tid);
         }
     }
 }

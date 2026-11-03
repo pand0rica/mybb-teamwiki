@@ -5,6 +5,21 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- **Entry title rendered unescaped.** `teamwiki.php` passed the raw entry title into the
+  `teamwiki` template (`{$entry['title']}`); it is now escaped with
+  `htmlspecialchars_uni()`.
+- **PHP 8 warning on the start page.** `$teamwiki_content` was appended to before it was
+  initialised; it is now initialised up front. `eid` is read with `MyBB::INPUT_INT`.
+- **Stylesheet only registered for the master theme and with a static `cachefile`.**
+  `teamwiki_activate()` now registers `teamwiki.css` in every theme and sets
+  `cachefile` to `css.php?stylesheet=<sid>` for new rows.
+
+### Changed
+- Plugin website in `teamwiki_info()` now points to `pand0rica/mybb-teamwiki`.
+
 ## [1.0.0] - 2026-08-17
 
 First public release. TeamWiki provides a group-based team wiki with categories,
