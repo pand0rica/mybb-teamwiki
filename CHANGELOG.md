@@ -18,6 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `cachefile` to `css.php?stylesheet=<sid>` for new rows.
 
 ### Changed
+- ACP CSRF protection uses MyBB's native mechanism (dev kit `debugging.md` #23): write
+  handlers only act on POST and `admin/index.php` validates the `my_post_key` itself –
+  no own key check or helper.
+  The redundant `verify_post_check()` calls and the `my_post_key` in the delete links were
+  removed; deleting still goes through MyBB's confirmation page (POST).
 - Plugin website in `teamwiki_info()` now points to `pand0rica/mybb-teamwiki`.
 
 ## [1.0.0] - 2026-08-17

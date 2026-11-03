@@ -240,7 +240,6 @@ function teamwiki_manage()
                 $popup->add_item(
                     $lang->teamwiki_manage_delete,
                     "index.php?module=config-teamwiki&amp;action=teamwiki_delete&amp;rid={$teamwiki_categories['id']}"
-                    ."&amp;my_post_key={$mybb->post_code}"
                 );
                 $form_container->output_cell($popup->fetch(), array("class" => "align_center"));
                 $form_container->construct_row();
@@ -257,11 +256,6 @@ function teamwiki_manage()
 
             if ($mybb->request_method == "post") {
 
-                // CSRF protection
-                if (!verify_post_check($mybb->get_input('my_post_key'))) {
-                    flash_message($lang->invalid_post_verify_key2, 'error');
-                    admin_redirect("index.php?module=config-teamwiki");
-                }
 
                 // Check if required fields are not empty
                 $title = $mybb->get_input('title');
@@ -346,11 +340,6 @@ function teamwiki_manage()
         if ($action == "teamwiki_edit") {
             if ($mybb->request_method == "post") {
 
-                // CSRF protection
-                if (!verify_post_check($mybb->get_input('my_post_key'))) {
-                    flash_message($lang->invalid_post_verify_key2, 'error');
-                    admin_redirect("index.php?module=config-teamwiki");
-                }
 
                 // Check if required fields are not empty
                 $title = $mybb->get_input('title');
@@ -458,31 +447,25 @@ function teamwiki_manage()
                 admin_redirect("index.php?module=config-teamwiki");
             }
 
-            if (!verify_post_check($mybb->get_input('my_post_key'))) {
-                flash_message($lang->invalid_post_verify_key2, 'error');
-                admin_redirect("index.php?module=config-teamwiki");
-            }  // all fine
-            else {
-                if ($mybb->request_method == "post") {
+            if ($mybb->request_method == "post") {
 
-                    // Remove the category, its entries and their group mappings
-                    $eq = $db->simple_select("teamwiki_entries", "id", "cat_id=" . (int)$rid);
-                    while ($er = $db->fetch_array($eq)) {
-                        $db->delete_query("teamwiki_entry_groups", "entry_id=" . (int)$er['id']);
-                    }
-                    $db->delete_query("teamwiki_entries", "cat_id=" . (int)$rid);
-                    $db->delete_query("teamwiki_categories", "id=" . (int)$rid);
-
-                    log_admin_action(htmlspecialchars_uni($delete_values['name']));
-
-                    flash_message($lang->teamwiki_manage_teamwiki_deleted, 'success');
-                    admin_redirect("index.php?module=config-teamwiki");
-                } else {
-                    $page->output_confirm_action(
-                        "index.php?module=config-teamwiki&amp;action=teamwiki_delete&amp;rid={$rid}",
-                        $lang->teamwiki_manage_delete
-                    );
+                // Remove the category, its entries and their group mappings
+                $eq = $db->simple_select("teamwiki_entries", "id", "cat_id=" . (int)$rid);
+                while ($er = $db->fetch_array($eq)) {
+                    $db->delete_query("teamwiki_entry_groups", "entry_id=" . (int)$er['id']);
                 }
+                $db->delete_query("teamwiki_entries", "cat_id=" . (int)$rid);
+                $db->delete_query("teamwiki_categories", "id=" . (int)$rid);
+
+                log_admin_action(htmlspecialchars_uni($delete_values['name']));
+
+                flash_message($lang->teamwiki_manage_teamwiki_deleted, 'success');
+                admin_redirect("index.php?module=config-teamwiki");
+            } else {
+                $page->output_confirm_action(
+                    "index.php?module=config-teamwiki&amp;action=teamwiki_delete&amp;rid={$rid}",
+                    $lang->teamwiki_manage_delete
+                );
             }
             exit();
         }
@@ -529,7 +512,6 @@ function teamwiki_manage()
                 $popup->add_item(
                     $lang->teamwiki_manage_delete,
                     "index.php?module=config-teamwiki&amp;action=entry_delete&amp;eid={$teamwiki_entries['id']}"
-                    ."&amp;my_post_key={$mybb->post_code}"
                 );
                 $form_container->output_cell($popup->fetch(), array("class" => "align_center"));
                 $form_container->construct_row();
@@ -546,11 +528,6 @@ function teamwiki_manage()
 
             if ($mybb->request_method == "post") {
 
-                // CSRF protection
-                if (!verify_post_check($mybb->get_input('my_post_key'))) {
-                    flash_message($lang->invalid_post_verify_key2, 'error');
-                    admin_redirect("index.php?module=config-teamwiki&amp;action=entries_view");
-                }
 
                 // Check if required fields are not empty
                 $title = $mybb->get_input('title');
@@ -686,11 +663,6 @@ function teamwiki_manage()
         if ($action == "entry_edit") {
             if ($mybb->request_method == "post") {
 
-                // CSRF protection
-                if (!verify_post_check($mybb->get_input('my_post_key'))) {
-                    flash_message($lang->invalid_post_verify_key2, 'error');
-                    admin_redirect("index.php?module=config-teamwiki&amp;action=entries_view");
-                }
 
                 // Check if required fields are not empty
                 $title = $mybb->get_input('title');
@@ -842,26 +814,20 @@ function teamwiki_manage()
                 admin_redirect("index.php?module=config-teamwiki&amp;action=entries_view");
             }
 
-            if (!verify_post_check($mybb->get_input('my_post_key'))) {
-                flash_message($lang->invalid_post_verify_key2, 'error');
+            if ($mybb->request_method == "post") {
+
+                $db->delete_query("teamwiki_entry_groups", "entry_id=" . (int)$eid);
+                $db->delete_query("teamwiki_entries", "id=" . (int)$eid);
+
+                log_admin_action(htmlspecialchars_uni($delete_values['title']));
+
+                flash_message($lang->teamwiki_manage_entry_deleted, 'success');
                 admin_redirect("index.php?module=config-teamwiki&amp;action=entries_view");
-            }  // all fine
-            else {
-                if ($mybb->request_method == "post") {
-
-                    $db->delete_query("teamwiki_entry_groups", "entry_id=" . (int)$eid);
-                    $db->delete_query("teamwiki_entries", "id=" . (int)$eid);
-
-                    log_admin_action(htmlspecialchars_uni($delete_values['title']));
-
-                    flash_message($lang->teamwiki_manage_entry_deleted, 'success');
-                    admin_redirect("index.php?module=config-teamwiki&amp;action=entries_view");
-                } else {
-                    $page->output_confirm_action(
-                        "index.php?module=config-teamwiki&amp;action=entry_delete&amp;eid={$eid}",
-                        $lang->teamwiki_manage_delete
-                    );
-                }
+            } else {
+                $page->output_confirm_action(
+                    "index.php?module=config-teamwiki&amp;action=entry_delete&amp;eid={$eid}",
+                    $lang->teamwiki_manage_delete
+                );
             }
             exit();
         }
