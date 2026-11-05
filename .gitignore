@@ -7,9 +7,6 @@
 docker-compose.yaml
 .dockerignore
 
-# Forum post (generated for forum threads, not code)
-PLUGIN_POST.html
-
 # OS / editor cruft
 .DS_Store
 Thumbs.db

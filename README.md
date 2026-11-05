@@ -61,7 +61,8 @@ Open **ACP → Configuration → TeamWiki**. You will see four tabs:
 2. Fill in the fields:
    - **Name** – the entry title.
    - **Category** – the category this entry belongs to (required).
-   - **Content** – the entry body. The MyCode editor lets you use BBCode, smilies and images.
+   - **Content** – the entry body. The MyCode editor lets you use BBCode, smilies and images;
+     HTML is allowed as well (intended: entries are written by admins only).
    - **Visibility** – select the usergroups allowed to see this entry. If you leave it
      empty, the entry **inherits** the visibility of its category.
 3. Click **Submit**.

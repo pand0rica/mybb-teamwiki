@@ -1,0 +1,86 @@
+[size=x-large][b]TeamWiki[/b][/size]
+[i]Version 1.0.0[/i] – Ein schlankes Wiki für dein Team, bei dem du pro Kategorie und Eintrag festlegst, welche Gruppen es sehen dürfen.
+
+[size=large][b]Worum geht's?[/b][/size]
+
+Regeln für die Moderation, Abläufe für die Bewerbungsannahme, Vorlagen fürs Event-Team: In vielen Foren liegt solches Wissen verstreut in Threads, PNs oder externen Dokumenten. TeamWiki bündelt es auf einer eigenen Seite im Forum. Du pflegst die Inhalte bequem im ACP und bestimmst für jede Kategorie und jeden Eintrag, welche Benutzergruppen ihn lesen dürfen.
+
+[size=large][b]Highlights[/b][/size]
+
+[list]
+[*] Eigene Wiki-Seite mit Navigation aus Kategorien und Einträgen
+[*] Sichtbarkeit pro Kategorie [i]und[/i] pro Eintrag über Benutzergruppen steuerbar
+[*] Inhalte mit MyCode-Editor, Smilies, Bildern und HTML
+[*] Keine Einstellungen nötig – installieren, Kategorien anlegen, fertig
+[/list]
+
+[size=large][b]Was das Plugin alles kann[/b][/size]
+
+[b]Für Mitglieder[/b]
+[list]
+[*][b]Wiki-Seite[/b] – Links siehst du die Kategorien mit allen Einträgen, die deine Gruppe lesen darf, rechts den ausgewählten Eintrag. So findest du Teamwissen an einer Stelle, ohne Threads durchsuchen zu müssen. [i](teamwiki.php)[/i]
+[*][b]Gefilterte Navigation[/b] – Kategorien ohne einen einzigen für dich sichtbaren Eintrag tauchen gar nicht erst auf. Wer auf nichts Zugriff hat, bekommt die übliche „Keine Berechtigung"-Meldung. [i](teamwiki.php)[/i]
+[/list]
+
+[b]Für Administratoren[/b]
+[list]
+[*][b]Kategorien verwalten[/b] – Anlegen, bearbeiten und löschen mit Name, Reihenfolge und erlaubten Gruppen. Beim Löschen einer Kategorie verschwinden auch ihre Einträge. [i](ACP → Konfiguration → TeamWiki)[/i]
+[*][b]Einträge verwalten[/b] – Titel, Kategorie, Inhalt im MyCode-Editor (auch HTML ist erlaubt, Einträge schreibt ja nur das Admin-Team) und eigene Sichtbarkeit. Ohne eigene Gruppen erbt ein Eintrag die Sichtbarkeit seiner Kategorie. [i](ACP → Konfiguration → TeamWiki → Einträge)[/i]
+[*][b]Flexibles Sichtbarkeitsmodell[/b] – Ein Eintrag mit eigenen Gruppen entscheidet selbst über seine Sichtbarkeit und kann so auch für eine Gruppe freigegeben werden, die die Kategorie nicht listet. Eine Kategorie ohne Gruppen steht allen offen.
+[*][b]Admin-Log[/b] – Anlegen, Bearbeiten und Löschen werden im Admin-Protokoll vermerkt.
+[/list]
+
+[size=large][b]So sieht's aus[/b][/size]
+
+[img]https://raw.githubusercontent.com/pand0rica/mybb-teamwiki/main/docs/screenshots/frontend.png[/img]
+[i]Die Wiki-Seite mit Navigation und geöffnetem Eintrag[/i]
+
+[img]https://raw.githubusercontent.com/pand0rica/mybb-teamwiki/main/docs/screenshots/add-category.png[/img]
+[i]Kategorie anlegen im ACP[/i]
+
+[img]https://raw.githubusercontent.com/pand0rica/mybb-teamwiki/main/docs/screenshots/add-entry.png[/img]
+[i]Eintrag anlegen mit MyCode-Editor und Gruppenauswahl[/i]
+
+[size=large][b]Einstellungen[/b][/size]
+
+TeamWiki kommt ohne globale Einstellungen aus. Alles, was du festlegen kannst – Reihenfolge und Sichtbarkeit –, stellst du direkt an den Kategorien und Einträgen ein.
+
+[size=large][b]Voraussetzungen[/b][/size]
+
+[list]
+[*] MyBB 1.8.x
+[*] PHP 7.4 oder 8.x
+[*] Keine weiteren Plugins nötig
+[/list]
+
+[size=large][b]Installation[/b][/size]
+
+[list=1]
+[*] Dateien in das MyBB-Stammverzeichnis kopieren (Ordnerstruktur beibehalten)
+[*] ACP → Konfiguration → Plugins → TeamWiki → Installieren & aktivieren
+[*] ACP → Konfiguration → TeamWiki → erste Kategorie und erste Einträge anlegen
+[*] Optional: einen Link auf [i]teamwiki.php[/i] in Header oder Navigation deines Themes setzen
+[/list]
+
+[size=large][b]Update[/b][/size]
+
+[list=1]
+[*] Neue Dateien hochladen und vorhandene überschreiben
+[*] ACP → Konfiguration → Plugins → TeamWiki → Deaktivieren und wieder Aktivieren
+[/list]
+Dabei werden Templates und Stylesheet neu eingespielt. Kategorien und Einträge bleiben erhalten.
+
+[size=large][b]Grenzen & Ausblick[/b][/size]
+
+TeamWiki bringt keinen automatischen Link in die Forennavigation mit – den setzt du selbst im Theme. Einträge haben keine Versionsgeschichte, und Inhalte werden ausschließlich im ACP gepflegt; Teammitglieder ohne ACP-Zugang können also lesen, aber nicht schreiben.
+
+[size=large][b]Download & Quellcode[/b][/size]
+
+&raquo; [url=https://github.com/pand0rica/mybb-teamwiki]GitHub: pand0rica/mybb-teamwiki[/url] – Änderungen im [url=https://github.com/pand0rica/mybb-teamwiki/blob/main/CHANGELOG.md]Changelog[/url], Lizenz GPL-3.0
+
+[size=large][b]Unterstützung[/b][/size]
+
+<i class="cp cp-tea"></i> Wenn dir das Plugin gefällt, kannst du mir gerne einen Tee spendieren: [url=https://ko-fi.com/pand0rica]ko-fi.com/pand0rica[/url]
+
+[size=small]Fragen, Bugs oder Feature-Wünsche gerne als GitHub Issue melden oder hier im Thread.
+Ich freue mich, wenn ihr mir den Link dalasst, wo das Plugin verwendet wird.[/size]

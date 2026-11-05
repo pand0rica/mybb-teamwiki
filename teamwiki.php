@@ -38,12 +38,14 @@ foreach ($cats as $c) {
     }
 }
 
-$eid = (int)$mybb->get_input('eid');
+$eid = $mybb->get_input('eid', MyBB::INPUT_INT);
+$teamwiki_content = '';
+$entry = ['title' => ''];
 
 // STARTSEITE
 if(!$eid)
 {
-    $entry['title'] = $lang->teamwiki_welcome;
+    $entry['title'] = htmlspecialchars_uni($lang->teamwiki_welcome);
     eval("\$teamwiki_content .= \"" . $templates->get("teamwiki_how_to") . "\";");
 //TEAMWIKI
 } elseif ($eid > 0) {
@@ -62,7 +64,7 @@ if(!$eid)
         $cres = $db->simple_select('teamwiki_categories', '*', 'id=' . (int)$entry['cat_id']);
         $row_teamwiki = $db->fetch_array($cres);
 
-        add_breadcrumb(htmlspecialchars_uni($row_teamwiki['name']), 'teamwiki.php');
+        add_breadcrumb(htmlspecialchars_uni((string)($row_teamwiki['name'] ?? '')), 'teamwiki.php');
         add_breadcrumb(htmlspecialchars_uni($entry['title']), 'teamwiki.php?eid=' . (int)$entry['id']);
 
         require_once MYBB_ROOT."inc/class_parser.php";
@@ -75,6 +77,8 @@ if(!$eid)
         );
 
         $teamwiki_content = $parser->parse_message($entry['content'], $parser_options);
+        // Titel landet roh im Template ({$entry['title']}) – vorher escapen
+        $entry['title'] = htmlspecialchars_uni($entry['title']);
     }
 
     $page = eval($templates->render('teamwiki'));
