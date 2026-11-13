@@ -13,7 +13,6 @@
 .teamwiki-content .codeblock {
 	box-sizing: border-box;
 	max-width: 100%;
-	border-left: 3px solid var(--h4w-accent-new);
 	border-radius: var(--h4w-radius);
 	padding: 12px 16px;
 	margin: 10px 0;
