@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- **Code blocks overflowed the content area.** Long lines in code blocks stretched the
+  table cell and caused a horizontal page scroll; they now wrap, and the block got a
+  more readable look.
 - **Entry title rendered unescaped.** `teamwiki.php` passed the raw entry title into the
   `teamwiki` template (`{$entry['title']}`); it is now escaped with
   `htmlspecialchars_uni()`.

@@ -3,5 +3,33 @@
 	line-height: 1.7;
 }
 
+/* Content cell: may shrink below the width of its content, so long code lines cannot stretch the table */
 .teamwiki-content {
+	max-width: 0;
+	width: 100%;
+}
+
+/* Code blocks: wrap long lines instead of stretching the table cell */
+.teamwiki-content .codeblock {
+	box-sizing: border-box;
+	max-width: 100%;
+	border-left: 3px solid var(--h4w-accent-new);
+	border-radius: var(--h4w-radius);
+	padding: 12px 16px;
+	margin: 10px 0;
+}
+
+.teamwiki-content .codeblock .title {
+	font-size: 0.85em;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	opacity: .75;
+	margin-bottom: 8px;
+}
+
+.teamwiki-content .codeblock code {
+	max-height: none;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	line-height: 1.6;
 }
